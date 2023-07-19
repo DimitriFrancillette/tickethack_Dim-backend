@@ -5,7 +5,6 @@ const tripSchema = mongoose.Schema({
     arrival: String,
     date: Date,
     price: Number,
-    booking: { type: mongoose.Schema.Types.ObjectId, ref: 'bookings' }
 });
 
 const Trip = mongoose.model('trips', tripSchema);
