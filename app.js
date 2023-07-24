@@ -6,6 +6,7 @@ const cors = require('cors');
 require('./models/connection');
 
 const tripsRouter = require('./routes/trips');
+const bookingsRouter = require('./routes/bookings');
 
 var app = express();
 
@@ -17,5 +18,6 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', tripsRouter);
+app.use('/bookings', bookingsRouter);
 
 module.exports = app;
