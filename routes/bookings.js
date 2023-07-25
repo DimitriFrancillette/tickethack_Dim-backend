@@ -3,9 +3,9 @@ var router = express.Router();
 const Booking = require('../models/bookings');
 
 //enregistrement des voyages dans la collection pour booking
-router.post("/:tripId", (req, res) => {
+router.post("/", (req, res) => {
 
-    const { tripId } = req.params;
+    const { tripId } = req.body;
 
     if (!tripId) {
         res.json({ result: false, error: "Missing id" });
@@ -66,6 +66,11 @@ router.delete("/:tripId", (req, res) => {
 router.get("/", (req, res) => {
     Booking.find({isBooked: false}).populate('trip')
     .then(bookings => {
+        console.log(bookings);
+        if (!bookings[0]) {
+            res.json({ result: false, message: 'No trip found.' });
+            return;
+        }
         res.json({result: true, bookings});
     })
     .catch(err => {
