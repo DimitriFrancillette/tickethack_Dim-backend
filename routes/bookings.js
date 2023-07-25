@@ -78,8 +78,8 @@ router.get("/", (req, res) => {
     });
 });
 
-//pour affichage dans la page Bookings, on passe le isPaid de false à true
-router.put("/booked/:tripId", (req, res) => {
+//pour affichage dans la page Bookings, on passe le isBooked de false à true
+router.patch("/:tripId", (req, res) => {
 
     const { tripId } = req.params;
 
@@ -101,7 +101,21 @@ router.put("/booked/:tripId", (req, res) => {
         });
 });
 
-
+//affichage des voyages sur la page bookings
+router.get("/booked", (req, res) => {
+    Booking.find({isBooked: true}).populate('trip')
+    .then(bookings => {
+        console.log(bookings);
+        if (!bookings[0]) {
+            res.json({ result: false, message: 'No trip found.' });
+            return;
+        }
+        res.json({result: true, bookings});
+    })
+    .catch(err => {
+        res.json({ error: "an error has occured", err });
+    });
+});
 
 
 
